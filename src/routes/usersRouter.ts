@@ -1,8 +1,10 @@
 import express from 'express'
-import {getUser} from '../controller/userContoller'
+import {getUserProfile, postUserProfile} from '../controller/userContoller'
+import {uploadProfileImage} from '../../middleware'
 
 const usersRouter = express.Router()
 
-usersRouter.get('/:id',getUser)
+usersRouter.get('/profile/:id', getUserProfile)
+usersRouter.post('/profile/:id', uploadProfileImage, postUserProfile)
 
-export default usersRouter
+export default usersRouter 

@@ -1,0 +1,9 @@
+html 
+	head 
+	body
+		h1 User Profile Page
+		div= name
+		img(src=profileImageKey)
+		form(action=`/users/profile/${userId}` method='POST' enctype="multipart/form-data")
+			input(type='file' name='profileImage')
+			button Upload
