@@ -5,18 +5,37 @@ import express from 'express'
 import usersRouter from './routes/usersRouter'
 import videosRouter from './routes/videosRouter'
 
-const app = express()
+class App{
+	public app : express.Application
+	
+	constructor(){
+		this.app  = express()
+		this.setViewEngine()
+		this.setMiddleWare()
+		this.setStatic()
+		this.getRouting()
+	}
 
-app.set('views', 'src/views')
-app.set('view engine', 'pug')
-app.use('/public',express.static('src/public'))
-app.use('/uploads',express.static('uploads'))
-app.use(express.json())
-app.use(express.urlencoded({extended : false}))
+	setViewEngine(){
+		this.app.set('view engine', 'pug')
+		this.app.set('views', 'src/views')
+	}
 
-app.get('/', (req,res) => res.render('index'))
-app.use('/users', usersRouter)
-app.use('/videos', videosRouter)
+	setMiddleWare(){
+		this.app.use(express.json())
+		this.app.use(express.urlencoded({extended : false}))
+	}
 
+	setStatic(){
+		this.app.use('/public',express.static('src/public'))
+		this.app.use('/uploads',express.static('uploads'))
+	}
 
-export default app
+	getRouting(){
+		this.app.get('/', (req,res) => res.render('index'))
+		this.app.use('/users', usersRouter)
+		this.app.use('/videos', videosRouter)
+	}
+}
+
+export default new App().app
